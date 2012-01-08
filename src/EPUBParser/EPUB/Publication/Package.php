@@ -1,6 +1,6 @@
 <?php
-namespace EPUB_Parser\EPUB\Publication;
-use EPUB_Parser\EPUB;
+namespace EPUBParser\EPUB\Publication;
+use EPUBParser\EPUB;
 
 class Package
 {
