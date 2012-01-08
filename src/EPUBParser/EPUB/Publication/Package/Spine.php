@@ -45,6 +45,11 @@ class Spine
         return $this->_itemrefs;
     }
 
+    public function getPages()
+    {
+        return array_map(function($itemref) {return $itemref->getItem();}, $this->_itemrefs);
+    }
+
     protected function _parseSpine(\DOMElement $elem)
     {
         if ($id = $elem->getAttribute('id')) {
