@@ -1,6 +1,6 @@
 <?php
-namespace EPUB_Parser\EPUB\OCF;
-use EPUB_Parser\EPUB;
+namespace EPUBParser\EPUB\OCF;
+use EPUBParser\EPUB;
 
 class Container
 {
