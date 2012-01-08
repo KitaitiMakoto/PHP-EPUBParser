@@ -1,5 +1,5 @@
 <?php
-namespace EPUB_Parser\EPUB;
+namespace EPUBParser\EPUB;
 
 class Book
 {
