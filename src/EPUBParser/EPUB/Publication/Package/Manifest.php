@@ -36,11 +36,20 @@ class Manifest
         foreach ($itemList as $itemElem) {
             $id = $itemElem->getAttribute('id');
             $fallback = $itemElem->getAttribute('fallback');
+            $properties = $itemElem->getAttribute('properties');
+            $properties = preg_replace('/ +/', ' ', $properties);
+            $properties = explode(' ', $properties);
+            if ($properties === array('')) {
+                $properties = array();
+            }
             $item = new Manifest\Item(array(
-                'id'        => $id,
-                'href'      => $itemElem->getAttribute('href'),
-                'meidaType' => $itemElem->getAttribute('media-type')
+                'id'           => $id,
+                'href'         => $itemElem->getAttribute('href'),
+                'mediaType'    => $itemElem->getAttribute('media-type'),
+                'properties'   => $properties,
+                'mediaOverlay' => $itemElem->getAttribute('media-overlay')
             ));
+            
             if ($fallback !== '') {
                 $fallbackMap[$id] = $fallback;
             }
