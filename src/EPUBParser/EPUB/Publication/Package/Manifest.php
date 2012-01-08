@@ -1,6 +1,6 @@
 <?php
-namespace EPUB_Parser\EPUB\Publication\Package;
-use EPUB_Parser\EPUB\Publication\Package;
+namespace EPUBParser\EPUB\Publication\Package;
+use EPUBParser\EPUB\Publication\Package;
 
 class Manifest
 {
@@ -22,12 +22,16 @@ class Manifest
         return $this->_items;
     }
 
+    public function getItem($id)
+    {
+        return $this->_items[$id];
+    }
+
     protected function _parse(\DOMElement $elem)
     {
         $xpath = new \DOMXpath($elem->ownerDocument);
         $xpath->registerNamespace(self::NAMESPACE_PREFIX, self::NAMESPACE_URI);
         $itemList = $xpath->evaluate(self::XPATH_ITEM);
-        var_dump($itemList->item(0));
         $fallbackMap = array();
         foreach ($itemList as $itemElem) {
             $id = $itemElem->getAttribute('id');

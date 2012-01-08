@@ -1,6 +1,6 @@
 <?php
-namespace EPUB_Parser\EPUB\Publication\Package\Manifest;
-use EPUB_Parser\EPUB\Publication\Package\Manifest;
+namespace EPUBParser\EPUB\Publication\Package\Manifest;
+use EPUBParser\EPUB\Publication\Package\Manifest;
 
 class Item
 {
@@ -24,9 +24,7 @@ class Item
                 $this->{'_' . $name} = $vars[$name];
             }
         }
-        if (! isset($this->_IRI)) {
-            $this->_IRI = $dir . '/' . $this->_href;
-        }
+        $this->_IRI = $this->_setIRI($baseDirectory);
 
     }
 
@@ -61,6 +59,20 @@ class Item
 
     public function getIRI()
     {
+        return $this->_IRI;
+    }
+
+    protected function _setIRI($basedir)
+    {
+        if ($rp = realpath($base)) {
+            $this->_IRI = "{$rp}/{$this->_href}";
+        } else {
+            $uri = parse_url($basedir);
+            if (! isset($uri['scheme'])) {
+                throw new RuntimeException("Invalid IRI: $basedir");
+            }
+            $this->_IRI = $basedir;
+        }
         return $this->_IRI;
     }
 }
