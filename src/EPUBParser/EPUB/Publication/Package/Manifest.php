@@ -10,6 +10,7 @@ class Manifest
 
     protected $_id;
     protected $_items;
+    protected $_coverImage;
 
     public function __construct(\DOMElement $elem)
     {
@@ -25,6 +26,19 @@ class Manifest
     public function getItem($id)
     {
         return $this->_items[$id];
+    }
+
+    public function getCoverImage()
+    {
+        if (! isset($this->_coverImage)) {
+            foreach ($this->_items as $item) {
+                if (in_array('cover-image', $item->getProperties())) {
+                    $this->_coverImage = $item;
+                    break;
+                }
+            }
+        }
+        return $this->_coverImage;
     }
 
     protected function _parse(\DOMElement $elem)
