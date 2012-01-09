@@ -4,8 +4,6 @@ use EPUBParser\EPUB\Publication\Package;
 
 class Spine
 {
-    const NAMESPACE_PREFIX = 'opf';
-    const NAMESPACE_URI    = 'http://www.idpf.org/2007/opf';
     const XPATH_ITEMREF    = '/opf:package/opf:spine/opf:itemref';
 
     protected $_id;
@@ -66,7 +64,7 @@ class Spine
     protected function _parseItemrefs(\DOMElement $elem, Manifest $manifest)
     {
         $xpath = new \DOMXPath($elem->ownerDocument);
-        $xpath->registerNamespace(self::NAMESPACE_PREFIX, self::NAMESPACE_URI);
+        $xpath->registerNamespace(Package::NAMESPACE_PREFIX, Package::NAMESPACE_URI);
         foreach ($xpath->evaluate(self::XPATH_ITEMREF) as $itemrefElem) {
             $idref = $itemrefElem->getAttribute('idref');
             $vars = array(

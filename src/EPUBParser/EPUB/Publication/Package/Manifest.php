@@ -4,8 +4,6 @@ use EPUBParser\EPUB\Publication\Package;
 
 class Manifest
 {
-    const NAMESPACE_PREFIX = 'opf';
-    const NAMESPACE_URI    = 'http://www.idpf.org/2007/opf';
     const XPATH_ITEM       = '/opf:package/opf:manifest/opf:item';
 
     protected $_id;
@@ -44,7 +42,7 @@ class Manifest
     protected function _parse(\DOMElement $elem)
     {
         $xpath = new \DOMXpath($elem->ownerDocument);
-        $xpath->registerNamespace(self::NAMESPACE_PREFIX, self::NAMESPACE_URI);
+        $xpath->registerNamespace(Package::NAMESPACE_PREFIX, Package::NAMESPACE_URI);
         $itemList = $xpath->evaluate(self::XPATH_ITEM);
         $fallbackMap = array();
         foreach ($itemList as $itemElem) {
