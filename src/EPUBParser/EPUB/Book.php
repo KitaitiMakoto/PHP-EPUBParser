@@ -29,4 +29,17 @@ class Book
     {
         return $this->_package;
     }
+
+    /**
+     * @param void|string|array
+     */
+    public function getResources($mediaTypes = null)
+    {
+        return $this->_package->getManifest()->getItems($mediaTypesxf);
+    }
+
+    public function getPagesOnSpine()
+    {
+        return $this->_package->getSpine()->getPages();
+    }
 }

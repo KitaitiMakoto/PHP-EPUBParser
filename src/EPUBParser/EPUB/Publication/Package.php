@@ -22,20 +22,20 @@ class Package
      */
     public static function parse($filename)
     {
+        return new self($filename);
+    }
+
+    public function __construct($filename)
+    {
         if (! $source = file_get_contents($filename)) {
             throw new \RuntimeException("Couldn't read file");
         }
-        return new self($source);
-    }
-
-    public function __construct($source)
-    {
         $doc = new \DOMDocument;
         if (! $doc->loadXML($source)) {
             throw new \RuntimeException("Couldn't parse as XML document");
         }
         $doc->preserveWhiteSpace = false;
-        $this->_parse($doc);
+        $this->_parse($doc, dirname($filename));
     }
 
     /**
@@ -72,19 +72,21 @@ class Package
         throw new Exception('Not implemented yet.');
     }
 
-    protected function _parse(\DOMDocument $doc)
+    protected function _parse(\DOMDocument $doc, $dirname)
     {
         $xpath = new \DOMXPath($doc);
         $xpath->registerNamespace(self::NAMESPACE_PREFIX, self::NAMESPACE_URI);
 
         // To do: Process metadata
         $elem = $xpath->evaluate(self::XPATH_MANIFEST)->item(0);
-        $this->_manifest = new Publication\Package\Manifest($elem);
+        $this->_manifest = new Publication\Package\Manifest($elem, $dirname);
 
         $elem = $xpath->evaluate(self::XPATH_SPINE)->item(0);
         $this->_spine = new Publication\Package\Spine($elem, $this->_manifest);
 
         $elem = $xpath->evaluate(self::XPATH_GUIDE)->item(0);
-        $this->_guide = new Publication\Package\Guide($elem);
+        if ($elem) {
+            $this->_guide = new Publication\Package\Guide($elem);
+        }
     }
 }

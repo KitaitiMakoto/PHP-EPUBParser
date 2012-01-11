@@ -11,6 +11,7 @@ class Item
     protected $_properties;
     protected $_mediaOverlay;
     protected $_IRI;
+    protected $_IRIIsRelative;
 
     /**
      * @param array $vars
@@ -26,7 +27,7 @@ class Item
                 $this->{'_' . $name} = $vars[$name];
             }
         }
-        $this->_IRI = $this->_setIRI($baseDirectory);
+        $this->_IRI = $this->_setIRI($dir);
 
     }
 
@@ -74,6 +75,11 @@ class Item
         return $this->_IRI;
     }
 
+    public function IRIIsRelative()
+    {
+        return $this->_IRIIsRelative;
+    }
+
     /**
      * To do: Check recursive fallback chain
      * To do: Accept SplDoublyLinkedList and check not using in_array
@@ -96,13 +102,19 @@ class Item
 
     protected function _setIRI($basedir)
     {
-        if ($rp = realpath($base)) {
-            $this->_IRI = "{$rp}/{$this->_href}";
+        if ($rp = realpath($basedir)) {
+            $realpath = realpath("{$rp}/{$this->_href}");
+            if (strpos($realpath, $rp) !== 0) {
+                throw new RuntimeException("Invalid href: {$tihs->_href}");
+            }
+            $this->_IRI = $realpath;
+            $this->_IRIIsRelative = true;
         } else {
             $uri = parse_url($basedir);
             if (! isset($uri['scheme'])) {
                 throw new RuntimeException("Invalid IRI: $basedir");
             }
+            $this->_IRIIsRelative = false;
             $this->_IRI = $basedir;
         }
         return $this->_IRI;

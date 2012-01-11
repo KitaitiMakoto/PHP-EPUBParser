@@ -10,6 +10,7 @@ class Spine
     protected $_toc;
     protected $_pageProgressionDirection;
     protected $_itemrefs;
+    protected $_pages;
 
     public function __construct(\DOMElement $elem, Package\Manifest $manifest)
     {
@@ -45,7 +46,10 @@ class Spine
 
     public function getPages()
     {
-        return array_map(function($itemref) {return $itemref->getItem();}, $this->_itemrefs);
+        if (! isset($this->_pages)) {
+            $this->_pages = array_map(function($itemref) {return $itemref->getItem();}, $this->_itemrefs);
+        }
+        return $this->_pages;
     }
 
     protected function _parseSpine(\DOMElement $elem)

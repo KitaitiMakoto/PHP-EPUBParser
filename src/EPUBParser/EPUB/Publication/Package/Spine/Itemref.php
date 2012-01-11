@@ -4,10 +4,16 @@ use EPUBParser\EPUB\Publication\Package\Spine;
 
 class Itemref
 {
+    protected $_idref;
+    protected $_linear;
+    protected $_id;
+    protected $_properties;
+    protected $_item;
+
     public function __construct(array $vars)
     {
         foreach (array('idref', 'linear', 'id', 'properties', 'item') as $name) {
-            if (isset($name)) {
+            if (isset($vars[$name])) {
                 $this->{'_' . $name} = $vars[$name];
             }
         }

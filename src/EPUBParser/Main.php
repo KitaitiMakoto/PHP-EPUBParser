@@ -27,3 +27,13 @@ namespace EPUBParser;
 class Main
 {
 }
+
+require_once __DIR__ . '/EPUB/Book.php';
+require_once __DIR__ . '/EPUB/OCF/Container.php';
+require_once __DIR__ . '/EPUB/Publication/Package.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Manifest.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Manifest/Item.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Spine.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Spine/Itemref.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Guide.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Guide/Reference.php';

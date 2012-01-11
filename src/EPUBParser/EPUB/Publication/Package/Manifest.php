@@ -4,21 +4,34 @@ use EPUBParser\EPUB\Publication\Package;
 
 class Manifest
 {
-    const XPATH_ITEM       = '/opf:package/opf:manifest/opf:item';
+    const XPATH_ITEM = '/opf:package/opf:manifest/opf:item';
 
     protected $_id;
     protected $_items;
     protected $_coverImage;
 
-    public function __construct(\DOMElement $elem)
+    public function __construct(\DOMElement $elem, $dirname)
     {
         $this->_items = array();
-        $this->_parse($elem);
+        $this->_parse($elem, $dirname);
     }
 
-    public function getItems()
+    /**
+     * @param void|string|array $mediaTypes media type string of array of media type which you want
+     * @return array array of Item. Able to be filtered with $mediaTypes
+     */
+    public function getItems($mediaTypes = null)
     {
-        return $this->_items;
+        $items = $this->_items;
+        if (is_string($mediaTypes)) {
+            $mediaTypes = array($mediaTypes);
+        }
+        if (! is_null($mediaTypes)) {
+            $items = array_filter($items, function($item) use ($mediaTypes) {
+                return in_array($item->getMediaType(), $mediaTypes);
+            });
+        }
+        return $items;
     }
 
     public function getItem($id)
@@ -39,7 +52,7 @@ class Manifest
         return $this->_coverImage;
     }
 
-    protected function _parse(\DOMElement $elem)
+    protected function _parse(\DOMElement $elem, $dirname)
     {
         $xpath = new \DOMXpath($elem->ownerDocument);
         $xpath->registerNamespace(Package::NAMESPACE_PREFIX, Package::NAMESPACE_URI);
@@ -60,7 +73,7 @@ class Manifest
                 'mediaType'    => $itemElem->getAttribute('media-type'),
                 'properties'   => $properties,
                 'mediaOverlay' => $itemElem->getAttribute('media-overlay')
-            ));
+            ), $dirname);
             
             if ($fallback !== '') {
                 $fallbackMap[$id] = $fallback;
