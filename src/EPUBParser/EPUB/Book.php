@@ -35,7 +35,7 @@ class Book
      */
     public function getResources($mediaTypes = null)
     {
-        return $this->_package->getManifest()->getItems($mediaTypesxf);
+        return $this->_package->getManifest()->getItems($mediaTypes);
     }
 
     public function getPagesOnSpine()
