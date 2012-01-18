@@ -42,4 +42,9 @@ class Book
     {
         return $this->_package->getSpine()->getPages();
     }
+
+    public function getNavs()
+    {
+        return $this->_package->getManifest()->getNavs();
+    }
 }

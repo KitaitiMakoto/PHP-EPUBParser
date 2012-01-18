@@ -39,6 +39,17 @@ class Manifest
         return $this->_items[$id];
     }
 
+    public function getNavs()
+    {
+        $navs = array();
+        foreach ($this->_items as $item) {
+            if (in_array('nav', $item->getProperties())) {
+                $navs[] = $item;
+            }
+        }
+        return $navs;
+    }
+
     public function getCoverImage()
     {
         if (! isset($this->_coverImage)) {
