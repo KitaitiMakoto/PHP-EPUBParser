@@ -105,14 +105,14 @@ class Item
         if ($rp = realpath($basedir)) {
             $realpath = realpath("{$rp}/{$this->_href}");
             if (strpos($realpath, $rp) !== 0) {
-                throw new RuntimeException("Invalid href: {$tihs->_href}");
+                throw new \RuntimeException("Invalid href: {$tihs->_href}");
             }
             $this->_IRI = $realpath;
             $this->_IRIIsRelative = true;
         } else {
             $uri = parse_url($basedir);
             if (! isset($uri['scheme'])) {
-                throw new RuntimeException("Invalid IRI: $basedir");
+                throw new \RuntimeException("Invalid IRI: $basedir");
             }
             $this->_IRIIsRelative = false;
             $this->_IRI = $basedir;
