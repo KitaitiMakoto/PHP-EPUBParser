@@ -6,6 +6,8 @@ class Package
 {
     const NAMESPACE_PREFIX = 'opf';
     const NAMESPACE_URI    = 'http://www.idpf.org/2007/opf';
+
+    const XPATH_METADATA   = '/opf:package/opf:metadata';
     const XPATH_MANIFEST   = '/opf:package/opf:manifest';
     const XPATH_SPINE      = '/opf:package/opf:spine';
     const XPATH_GUIDE      = '/opf:package/opf:guide';
@@ -43,7 +45,7 @@ class Package
      */
     public function getMetadata()
     {
-        throw new Exception('Not implemented yet');
+        return $this->_metadata;
     }
 
     /**
@@ -77,7 +79,9 @@ class Package
         $xpath = new \DOMXPath($doc);
         $xpath->registerNamespace(self::NAMESPACE_PREFIX, self::NAMESPACE_URI);
 
-        // To do: Process metadata
+        $elem = $xpath->evaluate(self::XPATH_METADATA)->item(0);
+        $this->_metadata = new Publication\Package\Metadata($elem);
+
         $elem = $xpath->evaluate(self::XPATH_MANIFEST)->item(0);
         $this->_manifest = new Publication\Package\Manifest($elem, $dirname);
 
