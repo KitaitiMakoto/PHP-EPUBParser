@@ -43,6 +43,11 @@ class Book
         return $this->_package->getSpine()->getPages();
     }
 
+    public function getCoverImage()
+    {
+        return $this->_package->getManifest()->getCoverImage();
+    }
+
     public function getNavs()
     {
         return $this->_package->getManifest()->getNavs();
