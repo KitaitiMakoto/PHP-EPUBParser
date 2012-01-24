@@ -31,6 +31,7 @@ class Main
 require_once __DIR__ . '/EPUB/Book.php';
 require_once __DIR__ . '/EPUB/OCF/Container.php';
 require_once __DIR__ . '/EPUB/Publication/Package.php';
+require_once __DIR__ . '/EPUB/Publication/Package/Metadata.php';
 require_once __DIR__ . '/EPUB/Publication/Package/Manifest.php';
 require_once __DIR__ . '/EPUB/Publication/Package/Manifest/Item.php';
 require_once __DIR__ . '/EPUB/Publication/Package/Spine.php';
