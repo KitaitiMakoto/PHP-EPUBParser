@@ -8,23 +8,32 @@ class ItemList extends Item
 
     public function __construct(\DOMElement $li)
     {
-        $this->_parse($span);
+        $this->_parse($li);
+    }
+
+    public function getItems()
+    {
+        return $this->_items;
     }
 
     protected function _parse(\DOMElement $li)
     {
-        $this->_parseLabel($li->firstChild);
-
-        $ol = $li->firstChild->firstChild;
-        if ($ol->tagName !== 'ol') {
-            throw new \RuntimeException('ol element not found');
+        foreach ($li->childNodes as $ch) {
+            if ($ch->tagName === 'span') {
+                $this->_parseLabel($ch);
+                continue;
+            }
+            if ($ch->tagName === 'ol') {
+                $this->_parseList($ch);
+                continue;
+            }
         }
-        $this->_parseList($ol);
     }
 
     protected function _parseLabel(\DOMElement $span)
     {
-        
+        $this->_label = $span->textContent;
+        return $this->_label;
     }
 
     protected function _parseList(\DOMElement $ol)

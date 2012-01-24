@@ -23,7 +23,7 @@ class Nav
         $this->_parseHeading($nav, $xpath);
         $this->_parseType($nav);
         $ol = $xpath->evaluate('xhtml:ol', $nav)->item(0);
-        $this->_parseList($ol);
+        $this->_parseList($ol, $item);
     }
 
     protected function _parseHeading(\DOMElement $nav, \DOMXPath $xpath)
@@ -49,14 +49,17 @@ class Nav
             if ($li->tagName !== 'li') {
                 continue;
             }
-            $item = $li->firstChild;
-            switch ($item->tagName) {
-            case 'a':
-                $this->_items[] = new Nav\Leaf($item);
-                break;
-            case 'span':
-                $this->_items[] = new Nav\ItemList($li);
-                break;
+            //$item = null;
+            //$item = $li->firstChild;
+            foreach ($li->childNodes as $item) {
+                switch ($item->tagName) {
+                case 'a':
+                    $this->_items[] = new Nav\Leaf($item);
+                    break;
+                case 'span':
+                    $this->_items[] = new Nav\ItemList($li);
+                    break;
+                }
             }
         }
     }

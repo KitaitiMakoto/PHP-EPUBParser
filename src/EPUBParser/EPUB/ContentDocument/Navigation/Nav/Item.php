@@ -4,6 +4,4 @@ use EPUBParser\EPUB\ContentDocument\Navigation\Nav;
 
 class Item
 {
-    private $_label;
 }
-

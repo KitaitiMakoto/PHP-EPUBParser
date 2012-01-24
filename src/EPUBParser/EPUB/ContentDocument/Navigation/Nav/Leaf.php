@@ -4,36 +4,33 @@ use EPUBParser\EPUB\ContentDocument\Navigation\Nav;
 
 class Leaf extends Item
 {
+    private $_label;
     private $_href;
-    private $_item;
 
     public function __construct(\DOMElement $a)
     {
         $this->_parse($a);
     }
 
-    protected function _parse(\DOMElement $a)
+    public function getLabel()
     {
-        $this->_parseLabel($a);
-        $this->_parseItem($a);
-    }
-
-    protected function _parseLabel(\DOMElement $a)
-    {
-        if ($label = $a->textContent) {
-            $this->_label = $label;
-            return $this->_label;
-        }
-        if ($label = $a->getAttribute('title')) {
-            $this->_label = $label;
-            return $this->_label;
-        }
-        $this->_label = '';
         return $this->_label;
     }
 
-    protected function _parseItem()
+    public function getHref()
     {
-        throw new \Exception('Not implemented');
+        return $this->_href;
+    }
+
+    protected function _parse(\DOMElement $a)
+    {
+        if ($label = $a->textContent) {
+            $this->_label = $label;
+        } elseif ($label = $a->getAttribute('title')) {
+            $this->_label = $label;
+        } else {
+            $this->_label = '';
+        }
+        $this->_href = $a->getAttribute('href');
     }
 }
