@@ -1,0 +1,24 @@
+{
+    "name": "EPUBParser",
+    "type": "library",
+    "description": "EPUB Parser",
+    "keywords": ["EPUB", "e-books"],
+    "homepage": "http://gitorious.org/php-epubparser/php-epubparser",
+    "license": "New BSD License",
+    "authors": [
+        {
+            "name": "KITAITI Makoto",
+            "email": "KitaitiMakoto@gmail.com",
+            "homepage": "http://kitaitimakoto.vs.land.to/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">= 5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "EPUBParser": "src"
+        }
+    }
+}
