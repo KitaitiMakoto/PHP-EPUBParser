@@ -50,14 +50,18 @@ class Metadata
         $xpath = new \DOMXPath($elem->ownerDocument);
         $xpath->registerNamespace(Package::NAMESPACE_PREFIX, Package::NAMESPACE_URI);
         $xpath->registerNamespace(self::DUBLINCORE_PREFIX, self::DUBLINCORE_URI);
+        
+        $titles = $xpath->evaluate(self::XPATH_TITLE);
+        $creators = $xpath->evaluate(self::XPATH_CREATOR);
+        $descriptions = $xpath->evaluate(self::XPATH_DESCRIPTION);
 
-        if ($titles = $xpath->evaluate(self::XPATH_TITLE)) {
+        if ($titles && $titles->length) {
             $this->_title = $titles->item(0)->textContent;
         }
-        if ($creators = $xpath->evaluate(self::XPATH_CREATOR)) {
+        if ($creators && $creators->length) {
             $this->_creator = $creators->item(0)->textContent;
         }
-        if ($descriptions = $xpath->evaluate(self::XPATH_DESCRIPTION)) {
+        if ($descriptions && $descriptions->length) {
             $this->_description = $descriptions->item(0)->textContent;
         }
         foreach ($xpath->evaluate(self::XPATH_SUBJECT) as $subject) {
